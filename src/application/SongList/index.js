@@ -8,9 +8,7 @@ const SongsList = React.forwardRef ((props, refs)=> {
 
   const totalCount = songs.length;
 
-  const selectItem = (e, index) => {
-    console.log (index);
-  }
+  const selectItem = (e, index) => {}
 
   let songList = (list) => {
     let res = [];

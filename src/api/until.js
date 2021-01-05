@@ -53,3 +53,51 @@ export const getName = list => {
 };
 
 export const isEmptyObject = obj => !obj || Object.keys (obj).length === 0;
+
+
+export const _getPosAndScale = () => {
+  const targetWidth = 40;
+  const paddingLeft = 40;
+  const paddingBottom = 30;
+  const paddingTop = 80;
+  const width = window.innerWidth * 0.8;
+  const scale = targetWidth /width;
+  // 两个圆心的横坐标距离和纵坐标距离
+  const x = -(window.innerWidth/ 2 - paddingLeft);
+  const y = window.innerHeight - paddingTop - width / 2 - paddingBottom;
+  return {
+    x,
+    y,
+    scale
+  };
+};
+
+
+let elementStyle = document.createElement ("div").style;
+
+let vendor = (() => {
+  // 首先通过 transition 属性判断是何种浏览器
+  let transformNames = {
+    webkit: "webkitTransform",
+    Moz: "MozTransform",
+    O: "OTransfrom",
+    ms: "msTransform",
+    standard: "Transform"
+  };
+  for (let key in transformNames) {
+    if (elementStyle[transformNames[key]] !== undefined) {
+      return key;
+    }
+  }
+  return false;
+})();
+
+export function prefixStyle (style) {
+  if (vendor === false) {
+    return false;
+  }
+  if (vendor === "standard") {
+    return style;
+  }
+  return vendor + style.charAt (0).toUpperCase () + style.substr (1);
+}

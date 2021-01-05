@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-export const baseUrl = 'http://localhost:3000/';
+export const baseUrl = 'http://106.15.92.199:3000/';
 
 //axios 的实例及拦截器配置
 const axiosInstance = axios.create ({
@@ -212,3 +212,10 @@ export const RankTypes = {
   "23": "江小白YOLO云音乐说唱榜"
 };
 export const HEADER_HEIGHT = 45;
+
+//播放模式
+export const playMode={
+  sequence:0,
+  loop:0,
+  random:2
+}

@@ -59,7 +59,6 @@ const renderRankList = (list, global) => {
     <List globalRank={global}>
      {
       list.map((item,index) => {
-        console.log(item);
         return (
           <ListItem key={index} tracks={item.tracks} onClick={() => enterDetail(item)}>
             <div className="img_wrapper">
