@@ -2,8 +2,9 @@ import React,{useRef}from 'react'
 import {MiniPlayerContainer} from './style'
 import {getName} from '../../../api/until'
 import {CSSTransition} from 'react-transition-group'
+import ProgressCircle from '../../../baseUI/progress-circle'
 function MiniPlayer(props){
-  const { song,fullScreen,toggleFullScreen} = props;
+  const { song,fullScreen,toggleFullScreen,togglePlaying,playing,percent} = props;
   const miniPlayerRef = useRef();
   return(
     <CSSTransition
@@ -19,7 +20,7 @@ function MiniPlayer(props){
       <MiniPlayerContainer ref={miniPlayerRef} >
     <div className="icon" onClick={()=>toggleFullScreen(true)}>
       <div className="imgWrapper">
-        <img className="play" src={song.al.picUrl} width="40" height="40" alt="img"/>
+        <img className={`play ${playing ? "": "pause"}`} src={song.al.picUrl} width="40" height="40" alt="img"/>
       </div>
     </div>
     <div className="text">
@@ -27,7 +28,13 @@ function MiniPlayer(props){
       <p className="desc">{getName(song.ar)}</p>
     </div>
     <div className="control">
-      <i className="iconfont">&#xe650;</i>
+    <ProgressCircle radius={32} percent={percent}>
+    { playing ? 
+    <i className="icon-mini iconfont icon-pause" onClick={() => togglePlaying(false)}>&#xe650;</i>
+    :
+    <i className="icon-mini iconfont icon-play" onClick={() => togglePlaying(true)}>&#xe61e;</i> 
+  }
+    </ProgressCircle>
     </div>
     <div className="control">
       <i className="iconfont">&#xe640;</i>

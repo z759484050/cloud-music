@@ -32,13 +32,7 @@ function Rank (props) {
   let officialList = rankList.slice(0, globalStartIndex);
   let globalList = rankList.slice(globalStartIndex);
   
-// const enterDetail = (name) => {
-//     const idx = filterIdx(name);
-//     if(idx === null) {
-//       alert("暂无相关数据");
-//       return;
-//     } 
-// }
+
 
 const enterDetail = (detail) => {
   props.history.push (`/rank/${detail.id}`)
