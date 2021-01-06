@@ -9,7 +9,6 @@ const ToastWrapper = styled.div`
   z-index: 1000;
   width: 100%;
   height: 50px;
-  /* background: ${style["highlight-background-color"]}; */
   &.drop-enter{
     opacity: 0;
     transform: translate3d(0, 100%, 0);

@@ -9,14 +9,15 @@ import style from "../../assets/global-style";
 import { connect } from 'react-redux';
 import {changeEnterLoading,getPlayList} from './store/actionCreators'
 import Loading from '../../baseUI/loading/index';
-
+import { changePlayList, changeCurrentIndex, changeSequecePlayList } from './../../application/Player/store/actionCreators';
+import MusicNote from '../../baseUI/music-note/index'
 function Album(props) {
   const [showStatus, setShowStatus] = useState(true);
   const [title, setTitle] = useState("歌单");
   const [isMarquee, setIsMarquee] = useState(false);//是否跑马灯
   const headerEl = useRef();
   
-  const { PlayList:myList, enterLoading } = props;
+  const { PlayList:myList, enterLoading,changePlayListDispatch,changeCurrentIndexDispatch,changeSequecePlayListDispatch} = props;
   const { getPlayListDispatch } = props;
 
   const id = props.match.params.id;
@@ -26,7 +27,7 @@ function Album(props) {
   }, [getPlayListDispatch, id]);
 
   let currentAlbum = myList.toJS();
-
+  console.log(currentAlbum);
   const handleBack = useCallback(() => {
     setShowStatus(false);
   }, []);
@@ -98,7 +99,16 @@ function Album(props) {
       </Menu>
     )
   };
-
+const musicNoteRef = useRef();
+const musicAnimation = (x, y) => {
+  musicNoteRef.current.startAnimation({ x, y });
+};
+  const selectItem = (e, index) => {
+    changePlayListDispatch (currentAlbum.tracks);
+    changeSequecePlayListDispatch (currentAlbum.tracks);
+    changeCurrentIndexDispatch (index);
+    musicAnimation(e.nativeEvent.clientX, e.nativeEvent.clientY);
+  }
   const renderSongList = () => {
     return (
       <SongList>
@@ -116,7 +126,7 @@ function Album(props) {
           {
             currentAlbum.tracks.map((item, index) => {
               return (
-                <li key={index}>
+                <li key={index} onClick={e=>selectItem(e,index)}>
                   <span className="index">{index + 1}</span>
                   <div className="info">
                     <span>{item.name}</span>
@@ -160,6 +170,7 @@ function Album(props) {
           : null
         }
         { enterLoading ? <Loading></Loading> : null}
+        <MusicNote ref={musicNoteRef}></MusicNote>
       </Container>
     </CSSTransition>
   )
@@ -177,6 +188,15 @@ const mapDispatchToProps = (dispatch) => {
       dispatch (changeEnterLoading(true));
       dispatch (getPlayList(id));
     },
+    changePlayListDispatch (data){
+      dispatch (changePlayList (data));
+    },
+    changeCurrentIndexDispatch (data) {
+      dispatch (changeCurrentIndex (data));
+    },
+    changeSequecePlayListDispatch (data) {
+      dispatch(changeSequecePlayList (data))
+    }
   }
 };
 

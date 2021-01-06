@@ -39,10 +39,7 @@ const [modeText, setModeText] = useState("");
 const toastRef =useRef()
 
 
-useEffect(() => {
-  changeCurrentIndexDispatch(0);
-  // eslint-disable-next-line 
-}, [])
+
 
 useEffect(() => {
   if (!playList.length||currentIndex===-1||!playList[currentIndex] ||playList[currentIndex].id===preSong.id ) return;
