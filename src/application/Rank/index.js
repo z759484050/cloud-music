@@ -60,7 +60,7 @@ const renderRankList = (list, global) => {
               <div className="decorate"></div>
               <span className="update_frequecy">{item.updateFrequency}</span>
             </div>
-            { renderSongList(item.tracks)  }
+            { renderSongList(item.tracks)}
           </ListItem>
         )
      })

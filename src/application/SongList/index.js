@@ -5,7 +5,7 @@ import { getName } from '../../api/until';
 const SongsList = React.forwardRef ((props, refs)=> {
 
   const { collectCount, showCollect, songs } = props;
-
+  console.log(props);
   const totalCount = songs.length;
 
   const selectItem = (e, index) => {}
