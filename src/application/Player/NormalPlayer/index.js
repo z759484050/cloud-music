@@ -16,7 +16,7 @@ import {
 import { prefixStyle } from "../../../api/until";
 import ProgressBar from '../../../baseUI/progressBar/index'
 function NormalPlayer(props) {
-  const { song, fullScreen, toggleFullScreen, playing, togglePlaying, duration,mode,
+  const { song, fullScreen, toggleFullScreen, playing, togglePlaying, togglePlayList,duration,mode,
      currentTime, percent, onProgressChange, handlePrev, handleNext,changeMode} = props;
   const normalPlayerRef = useRef()
   const CDWrapperRef = useRef()
@@ -72,16 +72,18 @@ function NormalPlayer(props) {
   const getPlayMode = () => {
     let content;
     if (mode === playMode.sequence) {
-      console.log(1);
+
       content = "&#xe625;";
     } else if (mode === playMode.loop) {
-      console.log(2);
+;
       content = "&#xe653;";
     } else {
       content = "&#xe61b;";
     }
     return content;
   };
+
+
 
   return (
     <CSSTransition
@@ -153,7 +155,7 @@ function NormalPlayer(props) {
             <div className="icon i-right" onClick={handleNext}>
               <i className="iconfont">&#xe718;</i>
             </div>
-            <div className="icon i-right">
+            <div className="icon i-right" onClick={() => togglePlayList (true)}>
               <i className="iconfont">&#xe640;</i>
             </div>
           </Operators>

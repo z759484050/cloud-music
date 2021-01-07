@@ -27,7 +27,6 @@ function Album(props) {
   }, [getPlayListDispatch, id]);
 
   let currentAlbum = myList.toJS();
-  console.log(currentAlbum);
   const handleBack = useCallback(() => {
     setShowStatus(false);
   }, []);

@@ -20,7 +20,7 @@ import { playMode } from '../../api/config'
 
 function Player(props) {
 const {fullScreen,playing,currentIndex,currentSong:immutableCurrentSong,playList:myplaylist,sequencePlayList:immutableSequencePlayList,mode}=props
-const {changeCurrentIndexDispatch, changeCurrentDispatch,togglePlayingDispatch,toggleFullScreenDispatch,changePlayListDispatch,changeModeDispatch}=props
+const {changeCurrentIndexDispatch, changeCurrentDispatch,togglePlayingDispatch,toggleFullScreenDispatch,changePlayListDispatch,changeModeDispatch,togglePlayListDispatch}=props
 const playList=myplaylist?myplaylist.toJS():[]
 const sequencePlayList=immutableSequencePlayList?immutableSequencePlayList.toJS():[]
 const currentSong = immutableCurrentSong.toJS();
@@ -149,9 +149,12 @@ const handleEnd=()=>{
       playing={playing} 
       toggleFullScreen={toggleFullScreenDispatch}
        togglePlaying={togglePlayingDispatch}
-       percent={percent}></MiniPlayer>}
+       togglePlayList={togglePlayListDispatch}
+       percent={percent}>
+         </MiniPlayer>}
       {isEmptyObject(currentSong)?null:
       <NormalPlayer 
+      togglePlayList={togglePlayListDispatch}
       song={currentSong}
       percent={percent} 
       fullScreen={fullScreen}

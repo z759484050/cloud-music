@@ -14,4 +14,5 @@ export const SET_CURRYENT_INDEX='SET_CURRYENT_INDEX'
 
 export const SET_SHOW_PLAYLIST='SET_SHOW_PLAYLIST'
 
+export const DELETE_SONG = 'player/DELETE_SONG';
 
