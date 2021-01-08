@@ -181,7 +181,7 @@ function PlayList(props) {
     listWrapperRef.current.style[transform] = `translate3d (0px, 0px, 0px)`;
   }
   };
-
+  console.log(777);
 
   return (
     <CSSTransition

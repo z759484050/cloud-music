@@ -57,18 +57,18 @@ export const ListHeader = styled.div `
       flex:1;
       .text {
         flex: 1;
-        font-size: ${style ["font-size-m"]};
-        color: ${style ["font-color-desc"]};
+        font-size: ${style["font-size-m"]};
+        color: ${style["font-color-desc"]};
       }
     }
     .iconfont {
       margin-right: 10px;
-      font-size: ${style ["font-size-ll"]};
-      color: ${style ["theme-color"]};
+      font-size: ${style["font-size-ll"]};
+      color: ${style["theme-color"]};
     }
     .clear {
       ${style.extendClick ()}
-      font-size: ${style ["font-size-l"]};
+      font-size: ${style["font-size-l"]};
     }
   }
 `
@@ -84,28 +84,28 @@ export const ListContent = styled.div `
     .current {
       flex: 0 0 20px;
       width: 20px;
-      font-size: ${style ["font-size-s"]};
-      color: ${style ["theme-color"]};
+      font-size: ${style["font-size-s"]};
+      color: ${style["theme-color"]};
     }
     .text {
       flex: 1;
       ${style.noWrap ()}
-      font-size: ${style ["font-size-m"]};
-      color: ${style ["font-color-desc-v2"]};
+      font-size: ${style["font-size-m"]};
+      color: ${style["font-color-desc-v2"]};
       .icon-favorite {
-        color: ${style ["theme-color"]};
+        color: ${style["theme-color"]};
       }
     }
     .like {
       ${style.extendClick ()}
       margin-right: 15px;
-      font-size: ${style ["font-size-m"]};
-      color: ${style ["theme-color"]};
+      font-size: ${style["font-size-m"]};
+      color: ${style["theme-color"]};
     }
     .delete {
       ${style.extendClick ()}
-      font-size: ${style ["font-size-s"]};
-      color: ${style ["theme-color"]};
+      font-size: ${style["font-size-s"]};
+      color: ${style["theme-color"]};
     }
   }
 `

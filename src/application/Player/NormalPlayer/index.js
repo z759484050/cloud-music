@@ -1,9 +1,11 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { getName } from "../../../api/until";
 import { CSSTransition } from 'react-transition-group'
 import animations from "create-keyframe-animation";
 import { _getPosAndScale, formatPlayTime } from '../../../api/until'
 import { playMode } from '../../../api/config';
+import Scroll from "../../../baseUI/scoll";
+import { LyricContainer, LyricWrapper } from "./style";
 import {
   NormalPlayerContainer,
   Top,
@@ -16,11 +18,35 @@ import {
 import { prefixStyle } from "../../../api/until";
 import ProgressBar from '../../../baseUI/progressBar/index'
 function NormalPlayer(props) {
-  const { song, fullScreen, toggleFullScreen, playing, togglePlaying, togglePlayList,duration,mode,
-     currentTime, percent, onProgressChange, handlePrev, handleNext,changeMode} = props;
+  const { song, fullScreen, toggleFullScreen, playing, clickPlaying, duration, mode,
+    currentTime, percent, onProgressChange, handlePrev, handleNext, changeMode, togglePlayList, currentLineNum,
+    currentPlayingLyric,
+    currentLyric } = props;
   const normalPlayerRef = useRef()
   const CDWrapperRef = useRef()
   const transform = prefixStyle("transform");
+  const currentState = useRef("");
+  const lyricScrollRef = useRef();
+  const lyricLineRefs = useRef([]);
+
+  useEffect(() => {
+    if (!lyricScrollRef.current) return;
+    let bScroll = lyricScrollRef.current.getBScroll();
+    console.log(bScroll);
+    console.log(currentLineNum);
+    if (currentLineNum) {
+      if (currentLineNum > 5) {
+        // 保持当前歌词在第 5 条的位置
+        let lineEl = lyricLineRefs.current[currentLineNum - 5].current;
+        bScroll.scrollToElement(lineEl, 1000);
+      } else {
+        // 当前歌词行数 <=5, 直接滚动到最顶端
+        bScroll.scrollTo(0, 0, 1000);
+      }
+    }
+
+  }, [currentLineNum]);
+
   const enter = () => {
     normalPlayerRef.current.style.display = "block";
     const { x, y, scale } = _getPosAndScale();// 获取 miniPlayer 图片中心相对 normalPlayer 唱片中心的偏移
@@ -75,12 +101,19 @@ function NormalPlayer(props) {
 
       content = "&#xe625;";
     } else if (mode === playMode.loop) {
-;
+
       content = "&#xe653;";
     } else {
       content = "&#xe61b;";
     }
     return content;
+  };
+  const toggleCurrentState = () => {
+    if (currentState.current !== "lyric") {
+      currentState.current = "lyric";
+    } else {
+      currentState.current = "";
+    }
   };
 
 
@@ -113,16 +146,55 @@ function NormalPlayer(props) {
           <h1 className="title">{song.name}</h1>
           <h1 className="subtitle">{getName(song.ar)}</h1>
         </Top>
-        <Middle ref={CDWrapperRef}>
-          <CDWrapper>
-            <div className="cd">
-              <img
-                className={`image play ${playing ? "" : "pause"}`}
-                src={song.al.picUrl + "?param=400x400"}
-                alt=""
-              />
-            </div>
-          </CDWrapper>
+        <Middle ref={CDWrapperRef} onClick={toggleCurrentState}>
+          <CSSTransition
+            timeout={400}
+            classNames="fade"
+            in={currentState.current !== "lyric"}
+          >
+            <CDWrapper style={{ visibility: currentState.current !== "lyric" ? "visible" : "hidden" }}>
+              <div className="cd">
+                <img
+                  className={`image play ${playing ? "" : "pause"}`}
+                  src={song.al.picUrl + "?param=400x400"}
+                  alt=""
+                />
+              </div>
+              <p className="playing_lyric">{currentPlayingLyric}</p>
+            </CDWrapper>
+          </CSSTransition>
+          <CSSTransition
+            timeout={400}
+            classNames="fade"
+            in={currentState.current === "lyric"}
+          >
+            <LyricContainer>
+              <Scroll ref={lyricScrollRef}>
+                <LyricWrapper
+                  style={{ visibility: currentState.current === "lyric" ? "visible" : "hidden" }}
+                  className="lyric_wrapper"
+                >
+                  {
+                    currentLyric
+                      ? currentLyric.lines.map((item, index) => {
+                        // 拿到每一行歌词的 DOM 对象，后面滚动歌词需要！ 
+                        lyricLineRefs.current[index] = React.createRef();
+                        return (
+                          <p
+                            className={`text ${currentLineNum === index ? "current" : ""
+                              }`}
+                            key={item + index}
+                            ref={lyricLineRefs.current[index]}
+                          >
+                            {item.txt}
+                          </p>
+                        );
+                      })
+                      : <p className="text pure"> 纯音乐，请欣赏。</p>}
+                </LyricWrapper>
+              </Scroll>
+            </LyricContainer>
+          </CSSTransition>
         </Middle>
 
         <Bottom className="bottom">
@@ -137,7 +209,7 @@ function NormalPlayer(props) {
             <div className="icon i-left" onClick={changeMode}>
               <i
                 className="iconfont"
-                dangerouslySetInnerHTML={{ __html: getPlayMode()}}
+                dangerouslySetInnerHTML={{ __html: getPlayMode() }}
               ></i>
             </div>
             <div className="icon i-left" onClick={handlePrev}>
@@ -146,7 +218,7 @@ function NormalPlayer(props) {
             <div className="icon i-center">
               <i
                 className="iconfont"
-                onClick={() => togglePlaying(!playing)}
+                onClick={(e) => clickPlaying(e, !playing)}
                 dangerouslySetInnerHTML={{
                   __html: playing ? "&#xe723;" : "&#xe731;"
                 }}
@@ -155,7 +227,7 @@ function NormalPlayer(props) {
             <div className="icon i-right" onClick={handleNext}>
               <i className="iconfont">&#xe718;</i>
             </div>
-            <div className="icon i-right" onClick={() => togglePlayList (true)}>
+            <div className="icon i-right" onClick={() => togglePlayList(true)}>
               <i className="iconfont">&#xe640;</i>
             </div>
           </Operators>
