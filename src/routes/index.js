@@ -6,7 +6,7 @@ import Singers from '../application/Singers';
 import Rank from '../application/Rank';
 import PlayList from '../application/PlayList'
 import Singer from '../application/Singer'
-
+import Search from '../application/Search'
 const route=[
   {
     path: "/",
@@ -48,8 +48,24 @@ const route=[
             component:PlayList
           }
         ]
+      },
+      {
+        path:'/search',
+        component:Search,
+        routes:[
+          {
+            path:'/recommend/:id',
+            component:PlayList
+          },
+          {
+            path:'/singers/:id',
+            component:Singer
+          }
+
+        ]
       }
     ]
   }
+
 ]
 export default route

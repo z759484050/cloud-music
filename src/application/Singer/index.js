@@ -31,6 +31,8 @@ const {
   artist: immutableArtist, 
   songs: immutableSongs, 
   loading,
+  currentSong,
+  countSongs
 } = props;
 const { getSingerDataDispatch } = props;
 
@@ -109,7 +111,7 @@ const handleScroll = useCallback(pos => {
     unmountOnExit
     onExited={() => props.history.goBack ()}
     >
-<Container>
+<Container play={currentSong.size?countSongs:0}>
   <Header
     handleClick={goback}
     title={artist.name}
@@ -148,7 +150,9 @@ const mapStateToProps = state => {
   return ({
     artist: state.getIn (["singerInfo", "singer"]),
     songs: state.getIn (["singerInfo", "songsOfSinger"]),
+    countSongs:state.getIn (["singerInfo", "songsOfSinger"]).size,
     loading: state.getIn (["singerInfo", "loading"]),
+    currentSong:state.getIn(['player','currentSong'])
   });
 }
 // 映射 dispatch 到 props 上

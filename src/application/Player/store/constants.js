@@ -16,3 +16,4 @@ export const SET_SHOW_PLAYLIST='SET_SHOW_PLAYLIST'
 
 export const DELETE_SONG = 'player/DELETE_SONG';
 
+export const INSERT_SONG = 'player/INSERT_SONG';

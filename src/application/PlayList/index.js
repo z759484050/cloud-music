@@ -21,7 +21,7 @@ function Album(props) {
   const { getPlayListDispatch } = props;
 
   const id = props.match.params.id;
-
+  console.log(id);
   useEffect(() => {
     getPlayListDispatch(id);
   }, [getPlayListDispatch, id]);

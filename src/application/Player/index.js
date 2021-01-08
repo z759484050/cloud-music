@@ -14,7 +14,6 @@ import NormalPlayer from './NormalPlayer/index'
 import { getSongUrl, isEmptyObject, shuffle, findIndex } from '../../api/until'
 import Toast from "./../../baseUI/Toast/index";
 import { playMode } from '../../api/config'
-import PlayList from '../../components/playList/index'
 import Lyric from '../../api/lyric'
 import { getLyricRequest } from '../../api/request'
 
@@ -241,7 +240,6 @@ function Player(props) {
 
       <audio ref={audioRef} onTimeUpdate={updatetime} onEnded={handleEnd}></audio>
       <Toast text={modeText} ref={toastRef}></Toast>
-      <PlayList></PlayList>
     </div>
   )
 }
