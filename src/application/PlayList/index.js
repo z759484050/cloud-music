@@ -100,7 +100,7 @@ function Album(props) {
   };
 const musicNoteRef = useRef();
 const musicAnimation = (x, y) => {
-  musicNoteRef.current.startAnimation({ x, y });
+  musicNoteRef.current['startAnimation']({ x, y });
 };
   const selectItem = (e, index) => {
     changePlayListDispatch (currentAlbum.tracks);

@@ -7,6 +7,7 @@ import Rank from '../application/Rank';
 import PlayList from '../application/PlayList'
 import Singer from '../application/Singer'
 import Search from '../application/Search'
+import User from '../application/User'
 const route=[
   {
     path: "/",
@@ -63,6 +64,10 @@ const route=[
           }
 
         ]
+      },
+      {
+        path:'/user',
+        component:User
       }
     ]
   }

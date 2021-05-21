@@ -112,7 +112,7 @@ function Player(props) {
       return;
     }
     let index = currentIndex + 1;
-    if (index === playList.length) index = 0;
+
     if (!playing) togglePlayingDispatch(true);
     changeCurrentIndexDispatch(index);
 
@@ -195,7 +195,7 @@ function Player(props) {
         currentLyric.current.seek(0);
       })
       .catch(() => {
-        songReady.current = true;
+        setSongReady(true);
         audioRef.current.play();
       });
   };

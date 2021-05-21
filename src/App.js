@@ -7,6 +7,7 @@ import store from './store/index'
 import routes from './routes/index.js'
 import { HashRouter } from 'react-router-dom';
 import  {Data} from './application/Singers/data'
+import 'antd/dist/antd.css';
 function App () {
   return (
     <Provider store={store}>

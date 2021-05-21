@@ -30,6 +30,7 @@ function Search(props) {
     setShow(true);
     if (!hotList.size)
       getHotKeyWordsDispatch();
+    // eslint-disable-next-line
   }, []);
   const renderHotKey = () => {
     let list = hotList ? hotList.toJS() : [];

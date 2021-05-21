@@ -56,7 +56,7 @@ export const insertSong = (data) => ({
 export const getSongDetail = (id) => {
   return (dispatch) => {
     getSongDetailRequest (id).then (data => {
-      let song = data.songs [0];
+      let song = data.songs[0];
       dispatch (insertSong ( song));
     })
   }
